@@ -51,7 +51,6 @@ NOTIFIERS="log, mock, twilio"
 # Twilio account details (only required if "twilio" is in NOTIFIERS)
 TWILIO_ACCOUNT_SID="your_twilio_account_sid"
 TWILIO_AUTH_TOKEN="your_twilio_auth_token"
-MEU_NUMERO="your_verified_phone_number"
 
 5. Create the Database Tables
 Run the following SQL commands inside your PostgreSQL database:
