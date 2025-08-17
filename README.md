@@ -20,38 +20,47 @@ Make sure you have the following installed:
 ---
 
 ### 1. Clone the Repository
-git clone https://github.com/thaysvs2/payment-api.git
+```
+git clone https://github.com/thaysvs2/payment-api.git  
 cd payment-api
+```
 
 ### 2. Set up the Python Virtual Environment
+```
 Create and activate a virtual environment to manage project dependencies.
-Create the virtual environment
+# Create the virtual environment
 python -m venv enviroment
 
-Activate the virtual environment
-On Windows
+# Activate the virtual environment
+# On Windows
 .\enviroment\Scripts\activate
-On macOS/Linux
+# On macOS/Linux
 source enviroment/bin/activate
+```
 
 ### 3. Install Dependencies
+```
 pip install -r requirements.txt
+```
 
 ### 4. Configure Environment Variables
+```
 Create a .env file in the root directory and add the following variables:
-PostgreSQL database connection string
-Format: postgresql://<user>:<password>@<host>:<port>/<database>
+# PostgreSQL database connection string
+# Format: postgresql://<user>:<password>@<host>:<port>/<database>
 DB_URL="postgresql://postgres:postgres@localhost:5432/your_database_name"
 
-Notifiers to be used (separate multiple services with a comma)
-Options: log, mock, twilio
+# Notifiers to be used (separate multiple services with a comma)
+# Options: log, mock, twilio
 NOTIFIERS="log, mock, twilio"
 
-Twilio account details (only required if "twilio" is in NOTIFIERS)
+# Twilio account details (only required if "twilio" is in NOTIFIERS)
 TWILIO_ACCOUNT_SID="your_twilio_account_sid"
 TWILIO_AUTH_TOKEN="your_twilio_auth_token"
+```
 
 ### 5. Create the Database Tables
+```
 Run the following SQL commands inside your PostgreSQL database:
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -72,14 +81,18 @@ CREATE TABLE transactions (
     FOREIGN KEY (source_id) REFERENCES users(id),
     FOREIGN KEY (destination_id) REFERENCES users(id)
 );
+```
 
 ### 6. Run the Application
+```
 Start the API server using Uvicorn:
 uvicorn main:app --reload
 The API documentation will be available at:
 👉 http://127.0.0.1:8000/docs
+```
 
 ⚙️ Project Structure
+```
 payment-api/
 │── main.py                # Main application entry point
 │── database/              # Database connection and models
@@ -87,12 +100,16 @@ payment-api/
 │── test_main.py           # Unit tests with pytest
 │── .env                   # Environment variables
 │── requirements.txt       # Project dependencies
+```
 
 🧪 Running Tests
+```
 Run all tests with:
 pytest
+```
 
 ✅ Implemented Features
+```
 User and Shopkeeper Models: Differentiates between two user types.
 
 Unique Constraints: Enforces unique CPF/CNPJ and email addresses.
@@ -108,8 +125,10 @@ External Service Integration: Integrates with mock services for transaction auth
 Atomic Transactions: Ensures all operations are completed or rolled back.
 
 RESTful API: Clean and well-structured API using FastAPI.
+```
 
 🛠️ Technologies Used
+```
 Python 3.10+
 
 FastAPI: High-performance, easy-to-use API framework
@@ -125,3 +144,4 @@ python-dotenv: Environment variables management
 Pytest: Testing framework
 
 httpx: HTTP client for FastAPI tests
+```
