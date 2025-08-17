@@ -11,6 +11,10 @@ Python 3.8+
 
 pip (Python package installer)
 
+PostgreSQL (database server)
+
+DBeaver or pgAdmin (database client tool)
+
 1. Clone the repository
 git clone https://github.com/thaysvs2/payment-api.git
 cd payment-api
@@ -33,7 +37,19 @@ Install all the required Python packages from the requirements.txt file.
 pip install -r requirements.txt
 
 4. Configure Environment Variables
-Create a .env file in the root directory and add the following variables. These are used for database connection and the Twilio notification service.
+Create a .env file in the root directory and add the following variables. These are used for database connection and configuring the notification services. The Twilio service is optional and can be enabled via the NOTIFIERS variable.
+
+# PostgreSQL database connection string
+# Format: postgresql://<user>:<password>@<host>:<port>/<database>
+DB_URL="postgresql://postgres:postgres@localhost:5432/your_database_name"
+
+# Notifiers to be used (separate multiple services with a comma)
+# Options: log, mock, twilio
+NOTIFIERS="log, mock, twilio"
+
+# Twilio account details (only required if "twilio" is in NOTIFIERS)
+TWILIO_ACCOUNT_SID="your_twilio_account_sid"
+TWILIO_AUTH_TOKEN="your_twilio_auth_token"
 
 # Database connection string
 DB_URL="postgresql://user:password@localhost:5432/your_database_name"
@@ -43,7 +59,30 @@ TWILIO_ACCOUNT_SID="your_twilio_account_sid"
 TWILIO_AUTH_TOKEN="your_twilio_auth_token"
 MEU_NUMERO="your_verified_phone_number"
 
-5. Run the Application
+5. Create the Database Tables
+Connect to your PostgreSQL database using DBeaver or pgAdmin and execute the following SQL commands to create the project's tables.
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    cpf_cnpj VARCHAR(14) NOT NULL UNIQUE,
+    email VARCHAR(200) NOT NULL UNIQUE,
+    balance DECIMAL(10, 2) DEFAULT 0.00,
+    phone VARCHAR(11) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE transactions (
+    id SERIAL PRIMARY KEY,
+    source_id INT NOT NULL,
+    destination_id INT NOT NULL,
+    value DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (source_id) REFERENCES users(id),
+    FOREIGN KEY (destination_id) REFERENCES users(id)
+);
+
+6. Run the Application
 You can start the API server using Uvicorn. The --reload flag enables auto-reloading on code changes.
 
 uvicorn main:app --reload
