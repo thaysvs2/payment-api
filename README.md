@@ -81,6 +81,25 @@ CREATE TABLE transactions (
     FOREIGN KEY (source_id) REFERENCES users(id),
     FOREIGN KEY (destination_id) REFERENCES users(id)
 );
+
+```
+
+### 5.1 Create and Populate the Database (Another option)
+First, ensure your PostgreSQL database (e.g., a database named db) has been created. The command below will create the necessary tables within an existing database, but it will not create the database itself.
+You can create the tables by running a Python command that uses SQLAlchemy to generate the schema from your models.
+```
+# Make sure your virtual environment is activated
+# And your .env file is configured correctly
+
+python -c "from database.connection import Base, engine; Base.metadata.create_all(bind=engine)"
+```
+After creating the tables, you must populate them with initial data. Connect to your database using a client like DBeaver and execute the following SQL commands to add test users.
+```
+INSERT INTO users (name, cpf_cnpj, email, balance, phone)
+VALUES ('Jose Comum', '12345678901', 'jose.comum@example.com', 1000.00, '11987654321');
+
+INSERT INTO users (name, cpf_cnpj, email, balance, phone)
+VALUES ('Maria Lojista', '12345678901234', 'maria.lojista@example.com', 500.00, '11912345678');
 ```
 
 ### 6. Run the Application
