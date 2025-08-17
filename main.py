@@ -24,7 +24,7 @@ app = FastAPI()
 
 def log_notification(user_name: str, message: str):
     """Terminal log notification strategy."""
-    logging.info(f"Log: Notificação para {user_name}: {message}")
+    logging.info(f"Log: Notification to {user_name}: {message}")
 
 def twilio_notification(number: str, message: str):
     """SMS notification strategy using Twilio."""
@@ -75,8 +75,8 @@ def dispatch_notifications(source_user: connection.User, destination_user: conne
     enabled_notifiers = os.getenv("NOTIFIERS", "log").split(',')
     
     # Prepare the generic message
-    message = f"Transação no valor de R$ {transaction_value} concluída com sucesso para o usuário {destination_user.name}"
-    
+    message = f"A transaction of ${transaction_value} has been successfully completed for user {destination_user.name}"
+
     for notifier_type in enabled_notifiers:
         notifier_type = notifier_type.strip().lower()
         
