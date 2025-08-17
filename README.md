@@ -26,9 +26,6 @@ cd payment-api
 2. Set up the Python Virtual Environment
 Create and activate a virtual environment to manage project dependencies.
 
-bash
-Copiar
-Editar
 # Create the virtual environment
 python -m venv enviroment
 
@@ -37,17 +34,12 @@ python -m venv enviroment
 .\enviroment\Scripts\activate
 # On macOS/Linux
 source enviroment/bin/activate
+
 3. Install Dependencies
-bash
-Copiar
-Editar
 pip install -r requirements.txt
+
 4. Configure Environment Variables
 Create a .env file in the root directory and add the following variables:
-
-ini
-Copiar
-Editar
 # PostgreSQL database connection string
 # Format: postgresql://<user>:<password>@<host>:<port>/<database>
 DB_URL="postgresql://postgres:postgres@localhost:5432/your_database_name"
@@ -60,12 +52,9 @@ NOTIFIERS="log, mock, twilio"
 TWILIO_ACCOUNT_SID="your_twilio_account_sid"
 TWILIO_AUTH_TOKEN="your_twilio_auth_token"
 MEU_NUMERO="your_verified_phone_number"
+
 5. Create the Database Tables
 Run the following SQL commands inside your PostgreSQL database:
-
-sql
-Copiar
-Editar
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
@@ -85,20 +74,14 @@ CREATE TABLE transactions (
     FOREIGN KEY (source_id) REFERENCES users(id),
     FOREIGN KEY (destination_id) REFERENCES users(id)
 );
+
 6. Run the Application
 Start the API server using Uvicorn:
-
-bash
-Copiar
-Editar
 uvicorn main:app --reload
 The API documentation will be available at:
 👉 http://127.0.0.1:8000/docs
 
 ⚙️ Project Structure
-bash
-Copiar
-Editar
 payment-api/
 │── main.py                # Main application entry point
 │── database/              # Database connection and models
@@ -106,13 +89,11 @@ payment-api/
 │── test_main.py           # Unit tests with pytest
 │── .env                   # Environment variables
 │── requirements.txt       # Project dependencies
+
 🧪 Running Tests
 Run all tests with:
-
-bash
-Copiar
-Editar
 pytest
+
 ✅ Implemented Features
 User and Shopkeeper Models: Differentiates between two user types.
 
