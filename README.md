@@ -20,10 +20,9 @@ Make sure you have the following installed:
 ---
 
 ### 1. Clone the Repository
-```bash
 git clone https://github.com/thaysvs2/payment-api.git
 cd payment-api
-```bash
+
 2. Set up the Python Virtual Environment
 Create and activate a virtual environment to manage project dependencies.
 # Create the virtual environment
