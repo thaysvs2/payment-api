@@ -1,10 +1,8 @@
 requests
 fastapi[all]
 sqlalchemy
-pymysql
-mangum
-boto3
+psycopg2-binary
 uvicorn
-python-jose
 logging
 pydantic
+python-dotenv

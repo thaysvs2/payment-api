@@ -60,7 +60,7 @@ client = TestClient(app)
 # ---------------------------
 
 
-@patch("main3.requests.get")
+@patch("main.requests.get")
 def test_successful_transaction(mock_get, db):
     mock_get.return_value.status_code = 200
     mock_get.return_value.json.return_value = {

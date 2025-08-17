@@ -3,8 +3,14 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, TIMESTAMP, DECIMAL, func
 from decimal import Decimal
 from pydantic import BaseModel
+import os
+from dotenv import load_dotenv
 
-db_url = "mysql+pymysql://root:root@localhost:3306/Db"
+
+load_dotenv()
+db_url = os.getenv("DB_URL")
+
+#db_url = "mysql+pymysql://root:root@localhost:3306/Db"
 
 # Attempt to connect to the database and create a session
 try:
