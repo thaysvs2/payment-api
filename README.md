@@ -1,27 +1,34 @@
-Payment API
-This is a back-end RESTful API developed with FastAPI and SQLAlchemy to simulate a simplified payment system. The project implements core functionalities like user and shopkeeper management, secure money transfers, external service integration for transaction authorization and notifications, and a robust testing suite.
+# 💳 Payment API
 
-🚀 Getting Started
+This is a back-end RESTful API developed with **FastAPI** and **SQLAlchemy** to simulate a simplified payment system.  
+
+The project implements core functionalities like **user and shopkeeper management**, **secure money transfers**, **external service integration** for transaction authorization and notifications, and a **robust testing suite**.
+
+---
+
+## 🚀 Getting Started
+
 Follow these steps to set up and run the project locally.
 
-Prerequisites
+### ✅ Prerequisites
 Make sure you have the following installed:
+- Python 3.8+
+- pip (Python package installer)
+- PostgreSQL (database server)
+- DBeaver or pgAdmin (database client tool)
 
-Python 3.8+
+---
 
-pip (Python package installer)
-
-PostgreSQL (database server)
-
-DBeaver or pgAdmin (database client tool)
-
-1. Clone the repository
+### 1. Clone the Repository
+```bash
 git clone https://github.com/thaysvs2/payment-api.git
 cd payment-api
-
 2. Set up the Python Virtual Environment
 Create and activate a virtual environment to manage project dependencies.
 
+bash
+Copiar
+Editar
 # Create the virtual environment
 python -m venv enviroment
 
@@ -30,15 +37,17 @@ python -m venv enviroment
 .\enviroment\Scripts\activate
 # On macOS/Linux
 source enviroment/bin/activate
-
 3. Install Dependencies
-Install all the required Python packages from the requirements.txt file.
-
+bash
+Copiar
+Editar
 pip install -r requirements.txt
-
 4. Configure Environment Variables
-Create a .env file in the root directory and add the following variables. These are used for database connection and configuring the notification services. The Twilio service is optional and can be enabled via the NOTIFIERS variable.
+Create a .env file in the root directory and add the following variables:
 
+ini
+Copiar
+Editar
 # PostgreSQL database connection string
 # Format: postgresql://<user>:<password>@<host>:<port>/<database>
 DB_URL="postgresql://postgres:postgres@localhost:5432/your_database_name"
@@ -50,18 +59,13 @@ NOTIFIERS="log, mock, twilio"
 # Twilio account details (only required if "twilio" is in NOTIFIERS)
 TWILIO_ACCOUNT_SID="your_twilio_account_sid"
 TWILIO_AUTH_TOKEN="your_twilio_auth_token"
-
-# Database connection string
-DB_URL="postgresql://user:password@localhost:5432/your_database_name"
-
-# Twilio account details
-TWILIO_ACCOUNT_SID="your_twilio_account_sid"
-TWILIO_AUTH_TOKEN="your_twilio_auth_token"
 MEU_NUMERO="your_verified_phone_number"
-
 5. Create the Database Tables
-Connect to your PostgreSQL database using DBeaver or pgAdmin and execute the following SQL commands to create the project's tables.
+Run the following SQL commands inside your PostgreSQL database:
 
+sql
+Copiar
+Editar
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
@@ -81,33 +85,34 @@ CREATE TABLE transactions (
     FOREIGN KEY (source_id) REFERENCES users(id),
     FOREIGN KEY (destination_id) REFERENCES users(id)
 );
-
 6. Run the Application
-You can start the API server using Uvicorn. The --reload flag enables auto-reloading on code changes.
+Start the API server using Uvicorn:
 
+bash
+Copiar
+Editar
 uvicorn main:app --reload
-
-The API documentation will be available at http://127.0.0.1:8000/docs.
+The API documentation will be available at:
+👉 http://127.0.0.1:8000/docs
 
 ⚙️ Project Structure
-The project is organized into the following directories:
-
-main.py: The main application entry point, defining all API endpoints and business logic.
-
-database/: Contains the connection.py module for database management, including SQLAlchemy models and helper functions.
-
-test_main.py: Contains unit tests for the API endpoints using pytest and FastAPI TestClient.
-
-.env: Environment variables file.
-
-requirements.txt: List of project dependencies.
-
+bash
+Copiar
+Editar
+payment-api/
+│── main.py                # Main application entry point
+│── database/              # Database connection and models
+│   └── connection.py
+│── test_main.py           # Unit tests with pytest
+│── .env                   # Environment variables
+│── requirements.txt       # Project dependencies
 🧪 Running Tests
-The project includes a robust suite of unit tests to ensure all business logic is working correctly.
+Run all tests with:
 
-# Run all tests
+bash
+Copiar
+Editar
 pytest
-
 ✅ Implemented Features
 User and Shopkeeper Models: Differentiates between two user types.
 
@@ -115,29 +120,29 @@ Unique Constraints: Enforces unique CPF/CNPJ and email addresses.
 
 Money Transfer Logic: Allows money transfer between users and to shopkeepers.
 
-Lojista Restrictions: Prevents shopkeepers from initiating transfers.
+Shopkeeper Restrictions: Prevents shopkeepers from initiating transfers.
 
 Balance Validation: Checks for sufficient balance before a transaction.
 
-External Service Integration: Integrates with mock services for transaction authorization and payment notifications.
+External Service Integration: Integrates with mock services for transaction authorization and notifications.
 
-Atomic Transactions: Ensures that all database operations within a transaction are completed or rolled back in case of an error.
+Atomic Transactions: Ensures all operations are completed or rolled back.
 
-RESTful API: Provides a clean and well-structured API using FastAPI.
+RESTful API: Clean and well-structured API using FastAPI.
 
 🛠️ Technologies Used
 Python 3.10+
 
-FastAPI: High-performance, easy-to-use API framework.
+FastAPI: High-performance, easy-to-use API framework
 
-SQLAlchemy: Powerful Python SQL toolkit and Object Relational Mapper (ORM).
+SQLAlchemy: ORM and SQL toolkit
 
-psycopg2: PostgreSQL driver for Python.
+psycopg2: PostgreSQL driver for Python
 
-Twilio: Third-party service for sending SMS notifications.
+Twilio: SMS notification service
 
-python-dotenv: Manages environment variables.
+python-dotenv: Environment variables management
 
-Pytest: Framework for writing and running tests.
+Pytest: Testing framework
 
-httpx: The recommended library for making HTTP requests with FastAPI's TestClient.
+httpx: HTTP client for FastAPI tests
