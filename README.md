@@ -36,7 +36,7 @@ pip install -r requirements.txt
 Create a .env file in the root directory and add the following variables. These are used for database connection and the Twilio notification service.
 
 # Database connection string
-DB_URL="mysql+pymysql://user:password@localhost:3306/your_database_name"
+DB_URL="postgresql://user:password@localhost:5432/your_database_name"
 
 # Twilio account details
 TWILIO_ACCOUNT_SID="your_twilio_account_sid"
@@ -92,6 +92,8 @@ Python 3.10+
 FastAPI: High-performance, easy-to-use API framework.
 
 SQLAlchemy: Powerful Python SQL toolkit and Object Relational Mapper (ORM).
+
+psycopg2: PostgreSQL driver for Python.
 
 Twilio: Third-party service for sending SMS notifications.
 
