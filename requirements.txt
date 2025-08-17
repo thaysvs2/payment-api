@@ -6,3 +6,4 @@ uvicorn
 logging
 pydantic
 python-dotenv
+twilio
