@@ -53,6 +53,12 @@ class Transaction(Base):
 
 # Pydantic Models for API Endpoints
 
+class UserCreate(BaseModel):
+    name: str
+    cpf_cnpj: str
+    email: str
+    balance: float
+    phone: str
 
 class TransactionCreate(BaseModel):
     cpf_cnpj_source: str

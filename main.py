@@ -7,6 +7,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 import requests
 from twilio.rest import Client
+from decimal import Decimal
+
 from database import connection # The import statement is correct
 
 # Configure logging
@@ -88,6 +90,30 @@ def dispatch_notifications(source_user: connection.User, destination_user: conne
         elif notifier_type == "mock":
             NOTIFIERS[notifier_type](cpf_cnpj=destination_user.cpf_cnpj, value=transaction_value)
 
+@app.post("/users", response_model=connection.UserCreate, status_code=status.HTTP_201_CREATED)
+def create_user(user_data: connection.UserCreate, db: Session = Depends(connection.get_db)):
+    """
+    Creates a new user.
+    """
+    try:
+        new_user = connection.User(
+            name=user_data.name,
+            cpf_cnpj=user_data.cpf_cnpj,
+            email=user_data.email,
+            balance=Decimal(user_data.balance),
+            phone=user_data.phone
+        )
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+        return new_user
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Error creating user: {e}")
+    finally:
+        db.close()
+
+
 @app.post("/transaction", response_model=connection.TransactionCreate, status_code=status.HTTP_201_CREATED)
 def create_transaction(transaction: connection.TransactionCreate, db: Session = Depends(connection.get_db)):
     logging.info("Starting transaction.")
@@ -155,9 +181,18 @@ def create_transaction(transaction: connection.TransactionCreate, db: Session = 
 def add_balance(balance_data: connection.BalancePush, db: Session = Depends(connection.get_db)):
     logging.info("Increasing balance for the specified user.")
     try:
+        user = db.query(connection.User).filter(connection.User.cpf_cnpj == balance_data.cpf_cnpj_source).first()
+        if not user:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found.")
+            
         connection.increase_balance(db=db, cpf_cnpj=balance_data.cpf_cnpj_source, value=balance_data.value)
         db.commit()
         logging.info("Success!")
+
+        # Dispara as notificações de acordo com a configuração
+        # Usando 'None' para source_user porque não é uma transação
+        dispatch_notifications(source_user=None, destination_user=user, transaction_value=balance_data.value)
+        
         return {
             "cpf_cnpj_source": balance_data.cpf_cnpj_source,
             "value": balance_data.value
