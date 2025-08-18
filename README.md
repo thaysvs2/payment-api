@@ -81,7 +81,24 @@ CREATE TABLE transactions (
     FOREIGN KEY (source_id) REFERENCES users(id),
     FOREIGN KEY (destination_id) REFERENCES users(id)
 );
+
 ```
+
+### 5.1 Alternative: Creating Tables and Populating with a Python Script
+First, ensure your PostgreSQL database (e.g., a database named db) has been created. The command below will create the necessary tables within an existing database, but it will not create the database itself.
+You can create the tables by running a Python command that uses SQLAlchemy to generate the schema from your models.
+```
+# Make sure your virtual environment is activated
+# And your .env file is configured correctly
+
+python -c "from database.connection import Base, engine; Base.metadata.create_all(bind=engine)"
+```
+Once the tables are created, you can add test users by running the utility script from your project's root directory:
+```
+python create_users_script.py
+
+```
+This script will add the "Jane Smith" user to your database, allowing you to run transactions and test your API. You can modify the script to add more users as needed.
 
 ### 6. Run the Application
 ```
